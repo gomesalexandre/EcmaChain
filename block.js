@@ -19,7 +19,7 @@ class Block {
   static genesis() {
     return new this('Genesis time', '----', 'Very first hash of our blockchain', []);
   }
-  static mineBlock(lastBlock, data) {
+  static mine(lastBlock, data) {
     const timeStamp = Date.now();
     const lastHash = lastBlock.hash;
     const hash = this.hash(timeStamp, lastHash, data);
