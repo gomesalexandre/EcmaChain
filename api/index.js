@@ -1,15 +1,19 @@
 const express = require('express');
 const Blockchain = require('../blockchain/blockchain');
 const bodyParser = require('body-parser');
-const config = require('./config');
+const P2pServer = require('./p2p-server');
 
 const app = express();
 const blockchain = new Blockchain();
+const p2pServer = new P2pServer(blockchain);
+
+const config = require('./config');
 
 app
   .use(bodyParser.urlencoded({ extended: false }))
-  .use(bodyParser.json())
+  .use(bodyParser.json());
 
+app
   .get('/blocks', (req, res) => {
   res.json(blockchain.chain);
 })
@@ -18,8 +22,7 @@ app
     console.log(`New block added ! ${block.toString()}`);
 
     res.redirect('/blocks');
-  })
+  });
 
-  .listen(config.port, () => {
-  console.log(`Listening on port ${config.port}`);
-});
+app.listen(config.port, () => console.log(`API server listening on port ${config.port}`));
+p2pServer.listen();
