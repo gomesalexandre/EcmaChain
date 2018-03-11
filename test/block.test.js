@@ -1,12 +1,14 @@
-const Block = require ('../block.js');
+const Block = require ('../blockchain/block.js');
 
 describe('Block', () => {
   let data, lastBlock, block;
+
   beforeEach(() => {
     data = 'bar';
     lastBlock = Block.genesis();
-    block = Block.mineBlock(lastBlock, data);
+    block = Block.mine(lastBlock, data);
   });
+
   it('Sets the data in the block', () => {
     expect(block.data).toEqual(data)
   });

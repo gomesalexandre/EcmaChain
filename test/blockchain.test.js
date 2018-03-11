@@ -1,5 +1,5 @@
-const Blockchain = require('../blockchain');
-const Block = require('../block');
+const Blockchain = require('../blockchain/blockchain.js');
+const Block = require('../blockchain/block.js');
 
 describe('Blockchain', () => {
   let blockchain;
@@ -40,5 +40,11 @@ describe('Blockchain', () => {
     blockchain.replaceChain(blockchain2.chain);
 
     expect(blockchain.chain).toEqual(blockchain2.chain);
+  });
+  it('Does not replace the blockchain with one of equal or inferior length', () => {
+    blockchain.addBlock('Nakamoto');
+    blockchain.replaceChain(blockchain2.chain);
+
+    expect(blockchain.chain).not.toEqual(blockchain2.chain);
   });
 });
